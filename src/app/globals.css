@@ -1,0 +1,141 @@
+@import "tailwindcss";
+
+/* =========================================================================
+   Global base + small shared surfaces.
+   Palette tokens live in landing.css (the "V2 Pastel" design system).
+   ========================================================================= */
+
+* {
+  box-sizing: border-box;
+}
+
+/* Google Translate chrome: hidden; the site ships its own toggle. */
+#google-translate-element,
+.goog-te-banner-frame.skiptranslate,
+.goog-te-gadget {
+  display: none !important;
+}
+
+body {
+  top: 0 !important;
+}
+
+h1, h2, h3, h4 {
+  text-wrap: pretty;
+}
+
+img,
+video {
+  max-width: 100%;
+}
+
+/* ----------------------------------------------------- language switcher */
+
+.language-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  min-height: 40px;
+  padding: 4px 14px 4px 5px;
+  border: none;
+  border-radius: 18px;
+  background: var(--so-paper-warm);
+  color: var(--so-soft);
+  font-family: inherit;
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: var(--so-shadow-sm);
+  transition: color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.language-toggle:hover {
+  color: var(--so-rose);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(143, 58, 77, 0.26);
+}
+
+.language-toggle-code {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 42px;
+  height: 31px;
+  padding: 0 12px;
+  border-radius: 16px;
+  background: var(--so-rose);
+  color: var(--so-paper-warm);
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+/* ------------------------------------------------------ treatment poster */
+
+/* ------------------------------------------------------------ legal pages */
+
+.legal-page {
+  min-height: 100svh;
+  padding: 140px 0 120px;
+  background: var(--so-cream);
+}
+
+.legal-shell {
+  width: min(760px, calc(100% - 48px));
+  margin: 0 auto;
+}
+
+.legal-shell > a {
+  display: inline-flex;
+  margin-bottom: 56px;
+  color: var(--so-rose);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.legal-shell .eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  margin: 0 0 16px;
+  color: var(--so-rose);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.legal-shell h1 {
+  margin: 0;
+  font-family: var(--font-so-display);
+  font-weight: 400;
+  font-size: clamp(40px, 6vw, 72px);
+  line-height: 1.04;
+  letter-spacing: -0.02em;
+  color: var(--so-ink-deep);
+}
+
+.legal-shell h2 {
+  margin: 48px 0 0;
+  font-family: var(--font-so-heading);
+  font-weight: 600;
+  font-size: 26px;
+  letter-spacing: -0.02em;
+  color: var(--so-ink-deep);
+}
+
+.legal-shell p {
+  margin-top: 16px;
+  color: var(--so-muted);
+  font-size: 16px;
+  line-height: 1.75;
+}
+
+.legal-draft {
+  margin-top: 36px;
+  padding: 22px 24px;
+  border: none;
+  border-radius: var(--so-radius);
+  background: var(--so-pink);
+  color: var(--so-rose) !important;
+}

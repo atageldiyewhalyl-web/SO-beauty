@@ -1,0 +1,4 @@
+project_id = "so-beauty-salon"
+
+[functions.so-anfrage]
+verify_jwt = false

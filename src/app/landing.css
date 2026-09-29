@@ -1,0 +1,2551 @@
+/*
+ * Headline face. Giveland's cmap advertises the umlauts but draws them without
+ * the diaeresis, and it has no sharp-s, en dash, em dash or middle dot. Those
+ * codepoints are carved out of the unicode-range below so the browser falls
+ * through to Pregio for them: same serif feel, correct German.
+ */
+@font-face {
+  font-family: "SO Display";
+  src: url("/fonts/Giveland.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  unicode-range:
+    U+0000-00B6, U+00B8-00C3, U+00C5-00D5, U+00D7-00DB, U+00DD-00DE,
+    U+00E0-00E3, U+00E5-00F5, U+00F7-00FB, U+00FD-2012, U+2015-10FFFF;
+}
+
+/* =========================================================================
+   S&O Beauty Salon: "V2 Pastel" design system
+   Source of truth: DESIGN.md
+   ========================================================================= */
+
+:root {
+  /* Typefaces */
+  --font-so-display: "SO Display", var(--font-so-heading-src), Georgia, serif;
+  --font-so-heading: var(--font-so-heading-src), Georgia, serif;
+  --font-so-body: var(--font-so-sans), Inter, -apple-system, sans-serif;
+
+  /* Grounds */
+  --so-cream: #fdf6f0;
+  --so-paper: #fffdf8;
+  --so-paper-warm: #fffdfa;
+  --so-hero: #fdf0ea;
+
+  /* Two chromatic values only: one rose, one pink. Everything else on the
+     page is a neutral cream or ink. Depth comes from opacity and elevation,
+     not from additional shades. */
+  --so-rose: #8f3a4d;
+  --so-pink: #feafc9;
+
+  /* Ink */
+  --so-ink: #21191c;
+  --so-ink-deep: #2d1a20;
+  --so-body-ink: #4d3a3e;
+  --so-muted: #584c46;
+  --so-soft: #7d6f66;
+
+  /* Lines & shadow */
+  --so-line: rgba(143, 58, 77, 0.14);
+  --so-line-soft: rgba(143, 58, 77, 0.1);
+  --so-shadow: 0 22px 50px rgba(143, 58, 77, 0.16);
+  --so-shadow-sm: 0 8px 30px rgba(143, 58, 77, 0.1);
+
+  /* Geometry */
+  --so-radius: 24px;
+  --so-pill: 32px;
+  --so-shell: 1240px;
+  --so-section: clamp(70px, 9vw, 130px);
+  --so-ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+
+  /* Legacy aliases: keep service.css / ratgeber.css / globals.css on-palette */
+  --font-manrope: var(--font-so-body);
+  --font-cormorant: var(--font-so-heading);
+  --rose-bone: var(--so-cream);
+  --rose-paper: var(--so-paper-warm);
+  --rose-blush: var(--so-pink);
+  --rose-accent: var(--so-rose);
+  --rose-wine: var(--so-rose);
+  --rose-wine-dark: var(--so-rose);
+  --rose-ink: var(--so-ink);
+  --rose-muted: var(--so-soft);
+  --rose-line: var(--so-line);
+  --rose-light-line: rgba(255, 253, 250, 0.25);
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 118px;
+}
+
+body {
+  min-width: 320px;
+  margin: 0;
+  overflow-x: hidden;
+  background: var(--so-cream);
+  color: var(--so-ink);
+  font-family: var(--font-so-body);
+  font-size: 16px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+body::selection,
+::selection {
+  background: var(--so-pink);
+  color: var(--so-ink-deep);
+}
+
+/* ------------------------------------------------------------------ motion */
+
+@keyframes so-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes so-menu {
+  from { opacity: 0; transform: translateY(-14px); }
+  to { opacity: 1; transform: none; }
+}
+
+[data-rev] {
+  opacity: 0;
+  transform: translateY(26px);
+  transition:
+    opacity 0.85s var(--so-ease),
+    transform 0.85s var(--so-ease);
+}
+[data-rev].so-on {
+  opacity: 1;
+  transform: none;
+}
+
+[data-card]:hover [data-arr],
+[data-btn]:hover [data-arr] {
+  transform: translate(3px, -3px);
+}
+[data-arr] {
+  transition: transform 0.35s ease;
+}
+
+[data-lift] {
+  transition: transform 0.45s ease, box-shadow 0.45s ease;
+}
+[data-lift]:hover {
+  transform: translateY(-7px);
+  box-shadow: var(--so-shadow);
+}
+
+/* ------------------------------------------------------------------ shared */
+
+.so-shell,
+.rose-shell {
+  width: min(var(--so-shell), calc(100% - 40px));
+  margin-inline: auto;
+}
+
+.so-section {
+  padding: var(--so-section) 20px;
+}
+
+.so-eyebrow,
+.rose-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  margin: 0 0 16px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--so-rose);
+}
+.so-eyebrow-light {
+  color: rgba(255, 253, 250, 0.8);
+}
+
+.so-h1 {
+  margin: 0 0 20px;
+  font-family: var(--font-so-display);
+  font-weight: 400;
+  font-size: clamp(40px, 6vw, 84px);
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+  color: var(--so-ink-deep);
+  text-wrap: pretty;
+}
+
+.so-h2 {
+  margin: 0 0 18px;
+  font-family: var(--font-so-display);
+  font-weight: 400;
+  font-size: clamp(32px, 4.6vw, 62px);
+  line-height: 1.06;
+  letter-spacing: -0.02em;
+  color: var(--so-ink-deep);
+  text-wrap: pretty;
+}
+
+.so-lead {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--so-soft);
+}
+
+/* Buttons: pill system */
+.so-btn,
+.rose-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border: none;
+  border-radius: var(--so-pill);
+  padding: 17px 32px;
+  min-height: 44px;
+  box-sizing: border-box;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.35s ease, color 0.35s ease, transform 0.35s ease, box-shadow 0.35s ease;
+}
+
+.so-btn-rose,
+.rose-button-ink,
+.rose-button-wine {
+  background: var(--so-rose);
+  color: var(--so-paper-warm);
+}
+.so-btn-rose:hover,
+.rose-button-ink:hover,
+.rose-button-wine:hover {
+  filter: brightness(0.9);
+  color: var(--so-paper-warm);
+  transform: translateY(-3px);
+  box-shadow: 0 14px 34px rgba(143, 58, 77, 0.3);
+}
+
+.so-btn-paper,
+.rose-button-paper {
+  background: var(--so-paper-warm);
+  color: var(--so-rose);
+}
+.so-btn-paper:hover,
+.rose-button-paper:hover {
+  background: var(--so-pink);
+  color: var(--so-rose);
+  transform: translateY(-3px);
+}
+
+.so-btn-quiet,
+.rose-button-outline {
+  background: rgba(255, 255, 255, 0.86);
+  color: var(--so-ink-deep);
+}
+.so-btn-quiet:hover,
+.rose-button-outline:hover {
+  background: #fff;
+  color: var(--so-rose);
+  transform: translateY(-3px);
+}
+
+.so-btn-ghost {
+  background: rgba(255, 253, 250, 0.12);
+  color: var(--so-paper-warm);
+  box-shadow: inset 0 0 0 1px rgba(255, 253, 250, 0.5);
+}
+.so-btn-ghost:hover {
+  background: var(--so-paper-warm);
+  color: var(--so-rose);
+  transform: translateY(-3px);
+}
+
+.so-btn-sm {
+  padding: 14px 26px;
+  font-size: 14px;
+}
+.so-btn-md {
+  padding: 15px 28px;
+  font-size: 14px;
+}
+
+/* Underline link */
+.so-link,
+.rose-text-link {
+  position: relative;
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--so-rose);
+  text-decoration: none;
+}
+.so-link::after,
+.rose-text-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  height: 1px;
+  width: 100%;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.35s ease;
+}
+.so-link:hover::after,
+.rose-text-link:hover::after {
+  transform: scaleX(1);
+}
+
+a {
+  color: var(--so-rose);
+  text-decoration: none;
+}
+a:hover {
+  color: var(--so-rose);
+}
+
+:is(a, button, summary, [tabindex]):focus-visible {
+  outline: 2px solid var(--so-rose);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* ------------------------------------------------------------------ header */
+
+.so-header {
+  position: fixed;
+  top: var(--so-header-top, 12px);
+  transition: top 0.55s var(--so-ease), background 0.45s ease, box-shadow 0.45s ease, border-color 0.45s ease;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  width: min(var(--so-shell), calc(100% - 32px));
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 16px;
+  box-sizing: border-box;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 28px;
+  padding: 10px 12px 10px 24px;
+  box-shadow: none;
+  animation: so-menu 0.9s 0.2s var(--so-ease) both;
+}
+
+:root[data-scrolled="true"] .so-header {
+  --so-header-top: clamp(14px, 2.5vw, 28px);
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-color: rgba(255, 255, 255, 0.6);
+  box-shadow: var(--so-shadow-sm);
+}
+
+.so-header-logo {
+  grid-column: 1;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--so-ink);
+}
+.so-header-logo:hover {
+  color: var(--so-rose);
+}
+.so-header-logo small {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--so-soft);
+  line-height: 1;
+}
+
+.so-mark {
+  display: block;
+  width: 30px;
+  height: 30px;
+  flex-shrink: 0;
+  background: var(--so-rose);
+  -webkit-mask: url("/brand/so-mark-glyph.png") center / contain no-repeat;
+  mask: url("/brand/so-mark-glyph.png") center / contain no-repeat;
+  transition: transform 0.45s var(--so-ease);
+}
+.so-header-logo:hover .so-mark {
+  transform: rotate(-8deg) scale(1.06);
+}
+
+.so-nav {
+  grid-column: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(18px, 2.4vw, 34px);
+}
+.so-nav > a,
+.so-nav-trigger > a {
+  position: relative;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--so-ink);
+}
+.so-nav > a::after,
+.so-nav-trigger > a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  height: 1px;
+  width: 100%;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.35s ease;
+}
+.so-nav > a:hover,
+.so-nav-trigger > a:hover {
+  color: var(--so-rose);
+}
+.so-nav > a:hover::after,
+.so-nav-trigger > a:hover::after {
+  transform: scaleX(1);
+}
+
+/* Treatments dropdown */
+.so-nav-trigger {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.so-nav-menu {
+  position: absolute;
+  top: calc(100% + 16px);
+  left: 50%;
+  transform: translate(-50%, 8px);
+  min-width: min(250px, 100%);
+  display: flex;
+  flex-direction: column;
+  padding: 8px;
+  background: var(--so-paper-warm);
+  border-radius: var(--so-radius);
+  box-shadow: var(--so-shadow);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, transform 0.3s var(--so-ease), visibility 0.3s;
+}
+.so-nav-trigger:hover .so-nav-menu,
+.so-nav-trigger:focus-within .so-nav-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, 0);
+}
+.so-nav-menu a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 11px 14px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--so-ink);
+  transition: background 0.25s ease, color 0.25s ease;
+}
+.so-nav-menu a:hover {
+  background: var(--so-pink);
+  color: var(--so-rose);
+}
+
+.so-header-actions {
+  grid-column: 3;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+}
+.so-header-cta {
+  padding: 12px 22px;
+  font-size: 14px;
+  min-height: 0;
+}
+.so-header-cta:hover {
+  transform: none;
+  box-shadow: 0 8px 22px rgba(143, 58, 77, 0.32);
+}
+
+.so-burger {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border: none;
+  border-radius: 50%;
+  background: var(--so-rose);
+  color: var(--so-paper-warm);
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+.so-burger:hover {
+  filter: brightness(0.9);
+}
+.so-burger span {
+  display: block;
+  width: 18px;
+  height: 2px;
+  border-radius: 2px;
+  background: currentColor;
+}
+.so-burger i {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+@media (max-width: 940px) {
+  .so-nav { display: none; }
+  .so-burger { display: flex; }
+  .so-header-cta { display: none; }
+  .so-header-actions { grid-column: 2 / 4; }
+}
+
+/* Mobile overlay */
+.so-mobile-menu {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  background: var(--so-ink-deep);
+  animation: so-fade 0.35s ease both;
+  overflow-y: auto;
+}
+.so-mobile-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40px;
+}
+.so-mobile-top .so-mark {
+  background: var(--so-paper-warm);
+}
+.so-mobile-close {
+  width: 44px;
+  height: 44px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 253, 250, 0.12);
+  color: var(--so-paper-warm);
+  font-size: 18px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+.so-mobile-close:hover {
+  background: rgba(255, 253, 250, 0.22);
+}
+.so-mobile-menu nav {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+.so-mobile-menu nav > a {
+  font-family: var(--font-so-heading);
+  font-size: 32px;
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  color: var(--so-paper-warm);
+  animation: so-menu 0.5s both;
+}
+.so-mobile-menu nav > a:hover {
+  color: var(--so-pink);
+}
+.so-mobile-sub {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: -8px 0 0 2px;
+  padding-left: 14px;
+  border-left: 1px solid rgba(255, 253, 250, 0.22);
+}
+.so-mobile-sub a {
+  font-size: 15px;
+  font-weight: 500;
+  color: rgba(255, 253, 250, 0.72);
+}
+.so-mobile-sub a:hover {
+  color: var(--so-pink);
+}
+.so-mobile-menu > a:last-child {
+  margin-top: auto;
+  padding-top: 24px;
+}
+
+/* ------------------------------------------------------------------- hero */
+
+/* The hero opens inset: white margins left, right and top, with the nav
+   sitting bare in the top strip. Scrolling past the fold closes the margins
+   to full bleed and hands the header its background back. */
+.so-hero {
+  --so-hero-gap: 16px;
+  --so-hero-top: 96px;
+  position: relative;
+  min-height: clamp(620px, 92vh, 860px);
+  display: flex;
+  flex-direction: column;
+  padding: var(--so-hero-top) var(--so-hero-gap) var(--so-hero-gap);
+  box-sizing: border-box;
+  background: var(--so-paper);
+  transition: padding 0.55s var(--so-ease);
+}
+:root[data-scrolled="true"] .so-hero {
+  --so-hero-gap: 0px;
+  --so-hero-top: 0px;
+}
+
+.so-hero-frame {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 18px;
+  background: var(--so-pink);
+  transition: border-radius 0.55s var(--so-ease);
+}
+:root[data-scrolled="true"] .so-hero-frame {
+  border-radius: 0;
+}
+@media (min-width: 901px) {
+  .so-hero {
+    min-height: 100svh;
+  }
+}
+
+.so-hero-media {
+  position: absolute;
+  inset: 0;
+}
+.so-hero-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 72% 42%;
+}
+/* Cream lift on the copy side: the photograph is high-key, so the type stays dark. */
+.so-hero-scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(253, 246, 240, 0.88) 0%, rgba(253, 246, 240, 0.68) 30%, rgba(253, 246, 240, 0.16) 58%, rgba(253, 246, 240, 0) 100%);
+}
+.so-hero-inner {
+  position: relative;
+  width: min(var(--so-shell), calc(100% - 40px));
+  margin: 0 auto;
+  padding: clamp(112px, 13vw, 150px) 0 clamp(40px, 6vw, 76px);
+}
+.so-hero-copy {
+  max-width: 40rem;
+}
+
+.so-hero h1 {
+  max-width: 14ch;
+  color: var(--so-ink-deep);
+}
+.so-hero-tagline {
+  margin: -10px 0 18px;
+  max-width: 36ch;
+  font-family: var(--font-so-heading);
+  font-size: clamp(20px, 2vw, 28px);
+  font-weight: 600;
+  line-height: 1.18;
+  color: var(--so-rose);
+}
+.so-hero-lead {
+  margin: 0 0 30px;
+  max-width: 42ch;
+  font-size: clamp(15px, 1.35vw, 17.5px);
+  line-height: 1.55;
+  color: var(--so-body-ink);
+}
+.so-hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+/* ------------------------------------------------------------- value prop */
+
+.so-value {
+  background: var(--so-cream);
+}
+.so-value-head {
+  text-align: center;
+  max-width: 660px;
+  margin: 0 auto clamp(44px, 6vw, 72px);
+}
+.so-value-head .so-eyebrow {
+  justify-content: center;
+}
+/* Bento mosaic: one tall tile beside a wide one, with two smaller tiles
+   underneath. Copy sits at the foot of each tile, after the reference. */
+.so-grid {
+  display: grid;
+  grid-template-columns: 1.05fr 1fr 1fr;
+  grid-auto-rows: minmax(clamp(300px, 24vw, 360px), auto);
+  gap: 14px;
+}
+.so-grid > :nth-child(1) { grid-column: 1; grid-row: 1 / span 2; }
+.so-grid > :nth-child(2) { grid-column: 2 / span 2; grid-row: 1; }
+.so-grid > :nth-child(3) { grid-column: 2; grid-row: 2; }
+.so-grid > :nth-child(4) { grid-column: 3; grid-row: 2; }
+
+.so-value-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-start;
+  text-align: left;
+  gap: 14px;
+  padding: 30px;
+  border-radius: var(--so-radius);
+  background: var(--so-pink);
+  overflow: hidden;
+}
+
+.so-grid > .so-value-card:nth-child(1) .so-grid > .so-value-card:nth-child(3) {
+  background: var(--so-paper);
+  box-shadow: inset 0 0 0 1.5px var(--so-pink);
+}
+.so-value-card h3 {
+  margin: 0 0 10px;
+  font-family: var(--font-so-heading);
+  font-weight: 600;
+  font-size: clamp(22px, 2vw, 27px);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--so-rose);
+}
+
+/* Lead tile carries a photograph; a rose wash keeps the type legible. */
+/* Photo tiles: the photograph is the tile background, copy sits over it on a
+   scrim. Copy is at the foot unless the tile is marked top-aligned. */
+.so-value-media {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 30%;
+}
+.so-value-scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(94, 33, 48, 0) 0%, rgba(94, 33, 48, 0) 44%, rgba(94, 33, 48, 0.34) 72%, rgba(94, 33, 48, 0.64) 100%);
+}
+.so-value-card[data-align="top"] {
+  justify-content: flex-start;
+}
+/* This tile's photograph is light at the top, so it needs no scrim and the
+   copy reads better dark. */
+.so-value-card[data-align="top"] .so-value-scrim {
+  display: none;
+}
+.so-value-card[data-media="photo"] h3 {
+  color: var(--so-paper-warm);
+}
+.so-value-card[data-media="photo"] p {
+  color: rgba(255, 253, 250, 0.88);
+}
+/* Dark tile: copy on the left, portrait held to the right edge. Separate grid
+   tracks, so the two can never overlap regardless of how the copy wraps. */
+.so-value-card[data-media="cutout"] {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.35fr);
+  grid-template-rows: minmax(0, 1fr);
+  align-items: center;
+  column-gap: 20px;
+  min-height: 0;
+  padding-right: 0;
+  padding-bottom: 0;
+  overflow: hidden;
+  background: var(--so-rose);
+}
+.so-value-card[data-media="cutout"] > div {
+  grid-row: 1;
+  grid-column: 1;
+  padding-block: 30px;
+}
+.so-value-card[data-media="cutout"] h3 {
+  color: var(--so-paper-warm);
+}
+.so-value-card[data-media="cutout"] p {
+  color: rgba(255, 253, 250, 0.86);
+}
+.so-value-card[data-media="cutout"] .so-value-media {
+  position: relative;
+  grid-row: 1;
+  grid-column: 2;
+  align-self: end;
+  justify-self: end;
+  margin-bottom: -1px;
+  width: 100%;
+  max-width: none;
+  height: auto;
+  max-height: 100%;
+  object-fit: contain;
+  object-position: right bottom;
+  pointer-events: none;
+}
+
+/* Phones have no room for two tracks: the portrait drops under the copy and
+   spans the full tile instead of being squeezed into half of ~295px. */
+@media (max-width: 560px) {
+  .so-value-card[data-media="cutout"] {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto minmax(0, 1fr);
+    align-items: start;
+    row-gap: 18px;
+    column-gap: 0;
+    padding-right: 26px;
+  }
+  .so-value-card[data-media="cutout"] > div {
+    padding-block: 26px 0;
+  }
+  .so-value-card[data-media="cutout"] .so-value-media {
+    grid-row: 2;
+    grid-column: 1;
+    justify-self: center;
+    width: auto;
+    max-width: 100%;
+    max-height: 100%;
+    object-position: center bottom;
+  }
+}
+.so-value-card > div {
+  position: relative;
+  z-index: 2;
+}
+.so-value-card p {
+  margin: 0;
+  font-size: 14.5px;
+  line-height: 1.55;
+  color: var(--so-muted);
+}
+
+@media (max-width: 900px) {
+  .so-grid {
+    grid-template-columns: 1fr 1fr;
+    grid-auto-rows: minmax(260px, auto);
+  }
+  .so-grid > :nth-child(1) { grid-column: 1 / span 2; grid-row: 1; }
+  .so-grid > :nth-child(2) { grid-column: 1 / span 2; grid-row: 2; }
+  .so-grid > :nth-child(3) { grid-column: 1; grid-row: 3; }
+  .so-grid > :nth-child(4) { grid-column: 2; grid-row: 3; }
+}
+
+@media (max-width: 560px) {
+  .so-grid {
+    grid-template-columns: 1fr;
+    /* Equal rows so every tile matches the tallest one -- the cutout tile,
+       which carries a portrait under its copy. */
+    grid-auto-rows: 1fr;
+  }
+  .so-grid > :nth-child(n) {
+    grid-column: 1;
+    grid-row: auto;
+  }
+  .so-value-card {
+    padding: 26px;
+  }
+}
+
+
+/* ------------------------------------------------------------- treatments */
+
+.so-treatments {
+  background: var(--so-paper);
+}
+
+.so-section-head {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 24px;
+  margin-bottom: clamp(44px, 6vw, 72px);
+}
+.so-section-head > div {
+  max-width: 640px;
+}
+.so-section-head .so-eyebrow {
+  justify-content: center;
+}
+.so-section-head h2 {
+  margin-bottom: 16px;
+}
+/* One treatment per row, full width. The media and the copy swap sides on
+   every other row. The invite card sits below the rows as a sibling. */
+.so-treatment-rail {
+  display: block;
+}
+.so-cards {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: clamp(48px, 6vw, 96px);
+}
+.so-card {
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1fr);
+  column-gap: 0;
+  align-items: stretch;
+  color: var(--so-ink);
+  /* A wash lifted from this row's own photograph, fading away from the media. */
+  background: linear-gradient(
+    90deg,
+    var(--so-card-tint, transparent) 0%,
+    var(--so-card-tint, transparent) 42%,
+    transparent 88%
+  );
+  border-radius: var(--so-radius);
+  overflow: hidden;
+}
+.so-card:nth-child(even) {
+  background: linear-gradient(
+    270deg,
+    var(--so-card-tint, transparent) 0%,
+    var(--so-card-tint, transparent) 42%,
+    transparent 88%
+  );
+}
+/* even rows swap: copy left, media right */
+.so-card:nth-child(even) > .so-card-media {
+  grid-column: 2;
+  grid-row: 1;
+}
+.so-card:nth-child(even) > .so-card-body {
+  grid-column: 1;
+  grid-row: 1;
+}
+.so-card:hover {
+  color: var(--so-ink);
+}
+
+@media (max-width: 760px) {
+  .so-card {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .so-card-media,
+  .so-card:nth-child(even) > .so-card-media {
+    grid-column: 1;
+    grid-row: auto;
+    justify-self: stretch;
+    max-width: none;
+  }
+  .so-card:nth-child(even) > .so-card-body {
+    grid-column: 1;
+    grid-row: auto;
+  }
+  /* stacked: the media always leads */
+  .so-card:nth-child(even) > .so-card-media,
+  .so-card:nth-child(even) > .so-card-body {
+    grid-column: 1;
+    grid-row: auto;
+  }
+
+  /* Phones swipe through the treatments instead of scrolling past five
+     full-height rows. The rail bleeds to both screen edges and snaps one card
+     at a time, with the next one peeking so the gesture is discoverable. */
+  .so-treatment-rail {
+    margin-inline: -20px;
+  }
+  .so-cards {
+    display: flex;
+    grid-template-columns: none;
+    gap: 14px;
+    padding-inline: 20px;
+    /* Both axes must be named. Setting only overflow-x makes the other axis
+       compute from `visible` to `auto`, which is what let the rail scroll
+       vertically as well as sideways. */
+    overflow-x: auto;
+    overflow-y: hidden;
+    overscroll-behavior-inline: contain;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: 20px;
+    scrollbar-width: none;
+  }
+  .so-cards::-webkit-scrollbar {
+    display: none;
+  }
+  /* The shared reveal parks an element 26px lower before it lands. Inside a
+     scroll container that 26px is real scroll range, so the rail's cards fade
+     in without the vertical travel. */
+  .so-cards > [data-rev] {
+    transform: none;
+  }
+  .so-card,
+  .so-card:nth-child(even) {
+    flex: 0 0 82%;
+    scroll-snap-align: start;
+    /* The 90deg wash was built for the side-by-side rows; stacked it reads as
+       a stripe, so the tint goes flat here. */
+    background: var(--so-card-tint, transparent);
+  }
+}
+
+.so-card-media {
+  position: relative;
+  aspect-ratio: 570 / 713;
+  justify-self: stretch;
+  width: 100%;
+  max-width: none;
+  overflow: hidden;
+  border-radius: 0;
+  background: var(--so-pink);
+}
+.so-card-media img,
+.so-card-media video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: var(--film-position, 50% 50%);
+}
+.so-card-media video {
+  opacity: 0;
+  transition: opacity 0.6s ease;
+  z-index: 2;
+}
+.so-card-media[data-playing="true"] video {
+  opacity: 1;
+}
+.so-card-zoom {
+  position: absolute;
+  inset: 0;
+}
+.so-card-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(28px, 3.4vw, 64px);
+}
+.so-card-body h3 {
+  margin: 0 0 14px;
+  font-family: var(--font-so-display);
+  font-weight: 400;
+  font-size: clamp(32px, 3.6vw, 54px);
+  line-height: 0.98;
+  letter-spacing: -0.02em;
+  color: var(--so-rose);
+}
+.so-card-body p {
+  margin: 0 0 26px;
+  max-width: 44ch;
+  font-size: clamp(15px, 1.2vw, 17px);
+  line-height: 1.42;
+  color: var(--so-muted);
+}
+.so-card-cue {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 44px;
+  padding: 12px 20px;
+  border-radius: var(--so-pill);
+  background: transparent;
+  box-shadow: inset 0 0 0 1.5px var(--so-rose);
+  color: var(--so-rose);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1;
+  transition: background 0.35s ease, color 0.35s ease, transform 0.35s ease;
+}
+.so-card:hover .so-card-cue {
+  background: var(--so-rose);
+  color: var(--so-paper-warm);
+  transform: translateY(-2px);
+}
+
+
+.so-card-invite {
+  margin: clamp(48px, 6vw, 96px) auto 0;
+  max-width: var(--so-shell);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 14px;
+  padding: 34px;
+  border-radius: var(--so-radius);
+  background: var(--so-pink);
+}
+.so-card-invite h3 {
+  margin: 0;
+  font-family: var(--font-so-display);
+  font-weight: 400;
+  font-size: clamp(30px, 3.2vw, 46px);
+  line-height: 1.04;
+  letter-spacing: -0.025em;
+  color: var(--so-rose);
+  text-wrap: pretty;
+}
+.so-card-invite p {
+  margin: 0;
+  font-size: 14.5px;
+  line-height: 1.55;
+  color: var(--so-muted);
+}
+.so-card-invite a {
+  align-self: flex-start;
+}
+
+/* From tablet up the invite card carries a photographic pink ground with the
+   subject in the right third. The copy is held to the left of her by the
+   right padding -- she spans roughly 74%-94% of the frame, so the text ends
+   well clear. Phones keep the flat pink: the card is far too narrow there to
+   crop a 2:1 composition without mangling it. */
+@media (min-width: 761px) {
+  .so-card-invite {
+    min-height: 300px;
+    padding-right: 38%;
+    background: var(--so-pink) url("/media/invite-pink.jpg") right 15% / cover
+      no-repeat;
+  }
+}
+
+/* Phones get the same photograph, composed vertically instead: she sits in
+   the top half and the copy drops beneath her on solid pink, the same move
+   the hero makes. Side by side does not work at this width -- the card is
+   only ~335px, so holding the text clear of her would leave it about 200px
+   and the heading would break into four lines.
+   The margin cancels the rail's -20px bleed, which the carousel needs but
+   this card does not: without it the invite runs edge to edge. */
+@media (max-width: 760px) {
+  .so-card-invite {
+    margin-inline: 20px;
+    min-height: clamp(530px, 148vw, 680px);
+    padding-bottom: 24px;
+    justify-content: flex-end;
+    background:
+      linear-gradient(
+        180deg,
+        rgba(254, 175, 201, 0) 0%,
+        rgba(254, 175, 201, 0) 34%,
+        rgba(254, 175, 201, 0.85) 47%,
+        var(--so-pink) 54%
+      ),
+      url("/media/invite-pink.jpg") right top / cover no-repeat,
+      var(--so-pink);
+  }
+}
+
+/* ------------------------------------------------------------------ prices */
+
+.so-prices {
+  background: linear-gradient(180deg, var(--so-paper) 0%, var(--so-cream) 100%);
+}
+.so-price-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin: -28px auto clamp(30px, 4vw, 48px);
+}
+.so-price-tabs a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
+  padding: 10px 18px;
+  border-radius: var(--so-pill);
+  background: var(--so-paper-warm);
+  color: var(--so-rose);
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: inset 0 0 0 1px var(--so-line-soft);
+  transition: background 0.3s ease, color 0.3s ease, transform 0.3s ease;
+}
+.so-price-tabs a:hover {
+  background: var(--so-rose);
+  color: var(--so-paper-warm);
+  transform: translateY(-2px);
+}
+.so-price-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+.so-price-card {
+  padding: clamp(22px, 3vw, 32px);
+  border-radius: var(--so-radius);
+  background: rgba(255, 253, 250, 0.86);
+  box-shadow: inset 0 0 0 1px var(--so-line-soft), var(--so-shadow-sm);
+}
+.so-price-card-head {
+  margin-bottom: 18px;
+}
+.so-price-card-head span {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--so-rose);
+}
+.so-price-card h3 {
+  margin: 0;
+  font-family: var(--font-so-heading);
+  font-size: clamp(34px, 4vw, 58px);
+  font-weight: 600;
+  line-height: 0.98;
+  color: var(--so-rose);
+}
+.so-price-card p {
+  margin: 0 0 20px;
+  max-width: 48ch;
+  color: var(--so-body-ink);
+  font-size: 15px;
+  line-height: 1.55;
+}
+.so-price-card dl,
+.so-price-promotions dl {
+  display: grid;
+  margin: 0;
+}
+.so-price-card div:has(> dt),
+.so-price-promotions div:has(> dt) {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: baseline;
+  padding: 13px 0;
+  border-top: 1px solid var(--so-line-soft);
+}
+.so-price-card dt,
+.so-price-promotions dt {
+  min-width: 0;
+  color: var(--so-body-ink);
+  font-size: 15px;
+  line-height: 1.35;
+}
+.so-price-card dd,
+.so-price-promotions dd {
+  margin: 0;
+  color: var(--so-rose);
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.35;
+  text-align: right;
+  white-space: nowrap;
+}
+.so-price-promotions {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: clamp(24px, 4vw, 52px);
+  align-items: center;
+  margin-top: 22px;
+  padding: clamp(24px, 4vw, 38px);
+  border-radius: var(--so-radius);
+  background: rgba(143, 58, 77, 0.08);
+  color: var(--so-rose);
+  box-shadow: inset 0 0 0 1px var(--so-line-soft);
+}
+.so-price-promotions .so-eyebrow {
+  color: var(--so-rose);
+}
+.so-price-promotions h3 {
+  margin: 0;
+  font-family: var(--font-so-heading);
+  font-size: clamp(25px, 2.2vw, 36px);
+  font-weight: 600;
+  line-height: 1.12;
+  color: var(--so-ink-deep);
+}
+.so-price-promotions p {
+  margin: 10px 0 0;
+  color: var(--so-muted);
+  font-size: 14.5px;
+  line-height: 1.5;
+}
+.so-price-detail-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 16px;
+  color: var(--so-rose);
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+}
+.so-price-detail-link:hover {
+  color: var(--so-ink-deep);
+}
+
+/* --------------------------------------------------------------- price page */
+
+.price-page {
+  overflow-x: clip;
+  background: var(--so-cream);
+  padding-top: 108px;
+}
+.price-hero {
+  text-align: center;
+  padding: clamp(72px, 9vw, 128px) 0 clamp(42px, 6vw, 80px);
+}
+.price-hero > p,
+.price-page-close p {
+  margin: 0 0 16px;
+  color: var(--so-rose);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+.price-hero h1 {
+  margin: 0;
+  font-family: var(--font-so-display);
+  font-size: clamp(54px, 8vw, 118px);
+  font-weight: 400;
+  line-height: 0.9;
+  color: var(--so-ink-deep);
+}
+.price-hero div {
+  max-width: 560px;
+  margin: 28px auto 0;
+}
+.price-hero div p {
+  margin: 0 0 28px;
+  color: var(--so-muted);
+  font-size: clamp(16px, 1.5vw, 19px);
+  line-height: 1.55;
+}
+.price-hero a {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--so-rose);
+  font-weight: 700;
+  text-decoration: none;
+}
+.price-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  padding-bottom: clamp(52px, 8vw, 96px);
+}
+.price-table-card {
+  scroll-margin-top: 120px;
+  padding: clamp(22px, 3vw, 34px);
+  border-radius: var(--so-radius);
+  background: var(--so-paper-warm);
+  box-shadow: inset 0 0 0 1px var(--so-line-soft), var(--so-shadow-sm);
+}
+.price-table-card:first-child,
+.price-table-card#laser-herren,
+.price-table-card:nth-child(7) {
+  grid-column: span 2;
+}
+.price-table-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  align-items: flex-end;
+  margin-bottom: 18px;
+}
+.price-table-head h2 {
+  margin: 0;
+  font-family: var(--font-so-heading);
+  font-size: clamp(25px, 2.5vw, 38px);
+  font-weight: 600;
+  line-height: 1.1;
+  color: var(--so-ink-deep);
+}
+.price-table-head span {
+  color: var(--so-rose);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.price-table-card dl {
+  display: grid;
+  margin: 0;
+}
+.price-table-card div:has(> dt) {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 16px;
+  align-items: baseline;
+  padding: 14px 0;
+  border-top: 1px solid var(--so-line-soft);
+}
+.price-table-card dt {
+  min-width: 0;
+  color: var(--so-body-ink);
+  font-size: 15.5px;
+  line-height: 1.35;
+}
+.price-table-card dd {
+  margin: 0;
+  color: var(--so-rose);
+  font-size: 15.5px;
+  font-weight: 700;
+  line-height: 1.35;
+  text-align: right;
+  white-space: nowrap;
+}
+.price-table-card > p {
+  margin: 18px 0 0;
+  color: var(--so-muted);
+  font-size: 14px;
+  line-height: 1.55;
+}
+.price-page-close {
+  background: var(--so-rose);
+  padding: clamp(56px, 8vw, 96px) 0;
+}
+.price-page-close h2 {
+  margin: 0 0 26px;
+  font-family: var(--font-so-display);
+  font-size: clamp(46px, 6vw, 88px);
+  font-weight: 400;
+  line-height: 0.95;
+  color: var(--so-paper-warm);
+}
+.price-page-close p {
+  color: rgba(255, 253, 250, 0.76);
+}
+
+/* ----------------------------------------------------------------- reviews */
+
+.so-reviews {
+  background: var(--so-cream);
+}
+.so-review-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+.so-review-card {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  min-height: 100%;
+  padding: clamp(22px, 3vw, 30px);
+  border-radius: var(--so-radius);
+  background: var(--so-paper-warm);
+  box-shadow: inset 0 0 0 1px var(--so-line-soft), var(--so-shadow-sm);
+}
+.so-review-top {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+.so-review-avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 42px;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: var(--so-rose);
+  color: var(--so-paper-warm);
+  font-weight: 700;
+}
+.so-review-top h3 {
+  margin: 0 0 2px;
+  font-family: var(--font-so-heading);
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.1;
+  color: var(--so-ink-deep);
+}
+.so-review-top p {
+  margin: 0;
+  color: var(--so-soft);
+  font-size: 13px;
+  line-height: 1.3;
+}
+.so-review-stars {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+.so-review-stars span {
+  color: #d99621;
+  font-size: 17px;
+  letter-spacing: 0.08em;
+}
+.so-review-stars small {
+  color: var(--so-rose);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.so-review-text {
+  margin: 0;
+  color: var(--so-body-ink);
+  font-size: 15px;
+  line-height: 1.58;
+}
+
+/* ------------------------------------------------------------- technology */
+
+.so-tech {
+  background: var(--so-cream);
+}
+.so-split {
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(30px, 5vw, 70px);
+  align-items: center;
+}
+.so-split > * {
+  flex: 1 1 420px;
+  min-width: min(290px, 100%);
+}
+.so-tech-stage {
+  position: relative;
+  height: clamp(380px, 46vw, 560px);
+  border-radius: var(--so-radius);
+  overflow: hidden;
+  background: var(--so-pink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.so-tech-stage img {
+  width: auto;
+  height: 100%;
+  max-width: 96%;
+  object-fit: contain;
+  filter: drop-shadow(0 26px 44px rgba(94, 33, 48, 0.28));
+}
+.so-tech p {
+  margin: 0 0 28px;
+  max-width: 52ch;
+}
+.so-tech-features {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: -8px 0 28px;
+}
+.so-tech-features span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 38px;
+  padding: 9px 15px;
+  border-radius: var(--so-pill);
+  background: var(--so-paper-warm);
+  color: var(--so-rose);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  box-shadow: inset 0 0 0 1px var(--so-line-soft), var(--so-shadow-sm);
+}
+
+/* ------------------------------------------------------------------ steps */
+
+.so-steps {
+  background: var(--so-paper);
+  padding-inline: 0;
+}
+.so-steps > .so-shell {
+  width: 100%;
+  max-width: none;
+}
+.so-steps-head {
+  width: min(var(--so-shell), calc(100% - 40px));
+  margin: 0 auto clamp(40px, 5vw, 64px);
+  text-align: center;
+}
+.so-steps-head .so-eyebrow {
+  justify-content: center;
+}
+.so-steps-head h2 {
+  margin-bottom: 0;
+}
+/* One banded row across the full width, columns divided by hairlines. */
+.so-steps-grid {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0;
+  isolation: isolate;
+  background:
+    linear-gradient(rgba(253, 246, 240, 0.35), rgba(253, 246, 240, 0.35)),
+    url("/media/ablauf-petals.jpg") center / cover no-repeat;
+}
+.so-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 4px;
+  padding: clamp(44px, 5vw, 76px) clamp(24px, 3vw, 48px);
+  border-radius: 0;
+  background: transparent;
+}
+.so-step:nth-child(2) b { opacity: 0.7; }
+.so-step:nth-child(3) b { opacity: 1; }
+.so-step + .so-step {
+  border-left: 1px solid rgba(143, 58, 77, 0.18);
+}
+.so-step .so-btn {
+  margin-top: 22px;
+}
+.so-step b {
+  display: block;
+  margin-bottom: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0.45;
+  font-family: var(--font-so-heading);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--so-rose);
+}
+.so-step h3 {
+  margin: 0 0 10px;
+  font-family: var(--font-so-heading);
+  font-weight: 600;
+  font-size: clamp(24px, 2.2vw, 32px);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--so-ink-deep);
+}
+.so-step p {
+  margin: 0;
+  font-size: 14.5px;
+  line-height: 1.55;
+  color: var(--so-muted);
+}
+
+/* ---------------------------------------------------------------- contact */
+
+.so-contact {
+  position: relative;
+  overflow: hidden;
+  background: var(--so-rose) url("/media/contact-silk.jpg") center / cover no-repeat;
+}
+/* The silk sits under a rose wash so the headline, the facts list and the
+   paper button keep their contrast no matter how the photo crops at a given
+   viewport. Left side is the heaviest because that is where the copy sits. */
+.so-contact::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    100deg,
+    rgba(74, 26, 36, 0.92) 0%,
+    rgba(74, 26, 36, 0.78) 45%,
+    rgba(74, 26, 36, 0.5) 100%
+  );
+  pointer-events: none;
+}
+.so-contact-inner {
+  position: relative;
+  align-items: flex-start;
+}
+.so-contact h2 {
+  color: var(--so-paper-warm);
+}
+.so-contact-lead {
+  margin: 0 0 30px;
+  max-width: 48ch;
+  font-size: 16px;
+  line-height: 1.55;
+  color: rgba(255, 253, 250, 0.9);
+}
+.so-contact-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  align-items: center;
+}
+.so-contact-actions > span {
+  font-size: 14.5px;
+  color: var(--so-pink);
+}
+.so-contact-facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 28px;
+  margin: 0 0 30px;
+}
+.so-contact-facts div {
+  margin: 0;
+}
+.so-contact-facts dt {
+  margin: 0 0 4px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(255, 253, 250, 0.8);
+}
+.so-contact-facts dd {
+  margin: 0;
+  font-size: 15px;
+  color: var(--so-paper-warm);
+}
+.so-contact-facts a {
+  color: inherit;
+  text-decoration: none;
+}
+.so-contact-facts a:hover {
+  color: var(--so-pink);
+}
+.so-contact-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: clamp(22px, 3vw, 34px);
+  border-radius: var(--so-radius);
+  background: rgba(255, 253, 250, 0.94);
+  box-shadow: var(--so-shadow);
+}
+.so-panel-kicker {
+  margin: 0 0 6px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--so-rose);
+}
+.so-contact-panel h3 {
+  margin: 0;
+  font-family: var(--font-so-heading);
+  font-size: clamp(24px, 2.3vw, 34px);
+  font-weight: 600;
+  line-height: 1.12;
+  color: var(--so-ink-deep);
+}
+.so-anfrage-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.so-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+.so-form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.so-form-field span {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--so-muted);
+}
+.so-form-field input,
+.so-form-field select,
+.so-form-field textarea {
+  width: 100%;
+  min-height: 48px;
+  box-sizing: border-box;
+  border: 1px solid var(--so-line);
+  border-radius: 16px;
+  background: var(--so-paper-warm);
+  color: var(--so-ink-deep);
+  font: inherit;
+  font-size: 15px;
+  outline: none;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+.so-form-field input,
+.so-form-field select {
+  padding: 0 15px;
+}
+.so-form-field textarea {
+  min-height: 128px;
+  padding: 14px 15px;
+  resize: vertical;
+}
+.so-form-field input:focus,
+.so-form-field select:focus,
+.so-form-field textarea:focus {
+  border-color: rgba(143, 58, 77, 0.45);
+  box-shadow: 0 0 0 4px rgba(254, 175, 201, 0.28);
+}
+.so-form-field textarea::placeholder {
+  color: rgba(88, 76, 70, 0.68);
+}
+.so-form-submit {
+  align-self: flex-start;
+  margin-top: 2px;
+}
+.so-form-note {
+  margin: 0;
+  max-width: 58ch;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--so-soft);
+}
+.so-form-consent {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--so-soft);
+}
+.so-form-consent input {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  margin-top: 2px;
+  accent-color: var(--so-rose);
+}
+.so-form-consent a {
+  color: var(--so-rose);
+  text-decoration: underline;
+}
+.so-form-error {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--so-rose);
+}
+.so-form-done {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.so-form-done h3 {
+  margin: 0;
+  font-family: var(--font-so-heading);
+  font-size: clamp(24px, 2.3vw, 34px);
+  font-weight: 600;
+  line-height: 1.12;
+  color: var(--so-ink-deep);
+}
+.so-form-done p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--so-soft);
+}
+.so-contact-map {
+  position: relative;
+  margin-top: clamp(28px, 4vw, 54px);
+  height: clamp(300px, 34vw, 420px);
+  border-radius: var(--so-radius);
+  overflow: hidden;
+  box-shadow: var(--so-shadow);
+}
+.so-contact-map iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  filter: saturate(0.86);
+}
+.so-contact-map a {
+  position: absolute;
+  left: 16px;
+  bottom: 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 18px;
+  border-radius: 18px;
+  background: var(--so-paper-warm);
+  color: var(--so-rose);
+  font-size: 13px;
+  font-weight: 600;
+  box-shadow: var(--so-shadow-sm);
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+.so-contact-map a:hover {
+  background: var(--so-pink);
+  transform: translateY(-2px);
+}
+
+/* ----------------------------------------------------------------- footer */
+
+.so-footer {
+  position: relative;
+  overflow: hidden;
+  background: var(--so-hero);
+  padding: clamp(56px, 7vw, 90px) 20px 0;
+}
+
+.so-footer-grid {
+  position: relative;
+  max-width: var(--so-shell);
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(32px, 4vw, 56px);
+  padding-bottom: clamp(44px, 5vw, 64px);
+}
+.so-footer-brand {
+  flex: 2 1 300px;
+  min-width: min(260px, 100%);
+}
+.so-footer-mark {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  margin-bottom: 18px;
+}
+.so-footer-mark .so-mark {
+  width: 38px;
+  height: 38px;
+}
+.so-footer-mark small {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--so-soft);
+  line-height: 1;
+}
+.so-footer-brand > p {
+  margin: 0 0 24px;
+  max-width: 36ch;
+  font-size: 14.5px;
+  line-height: 1.55;
+  color: var(--so-soft);
+}
+.so-footer-col {
+  flex: 1 1 180px;
+}
+.so-footer-col h4 {
+  margin: 0 0 18px;
+  font-family: var(--font-so-heading);
+  font-weight: 600;
+  font-size: 16px;
+  letter-spacing: -0.01em;
+  color: var(--so-ink-deep);
+}
+.so-footer-col nav,
+.so-footer-col div {
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+}
+.so-footer-col a {
+  align-self: flex-start;
+  font-size: 14px;
+  color: var(--so-soft);
+}
+.so-footer-col a:hover {
+  color: var(--so-rose);
+}
+.so-footer-col address {
+  margin: 20px 0 0;
+  font-size: 12.5px;
+  font-style: normal;
+  line-height: 1.55;
+  color: var(--so-soft);
+}
+.so-footer-bottom {
+  position: relative;
+  max-width: var(--so-shell);
+  margin: 0 auto;
+  border-top: 1px solid var(--so-line);
+  padding: 22px 0 28px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+  color: var(--so-soft);
+}
+.so-footer-bottom span {
+  display: inline-flex;
+  gap: 18px;
+}
+.so-footer-credit {
+  color: var(--so-soft);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+.so-footer-credit strong {
+  font-weight: 600;
+  color: var(--so-ink-deep);
+  transition: color 0.2s ease;
+}
+.so-footer-credit:hover,
+.so-footer-credit:hover strong {
+  color: var(--so-rose);
+}
+
+/* --------------------------------------------------------- mobile booking */
+
+.rose-mobile-booking {
+  position: fixed;
+  left: 50%;
+  bottom: 18px;
+  z-index: 45;
+  transform: translate(-50%, 140%);
+  display: none;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 22px;
+  border-radius: var(--so-pill);
+  background: var(--so-rose);
+  color: var(--so-paper-warm);
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+  max-width: calc(100vw - 28px);
+  box-shadow: 0 14px 34px rgba(143, 58, 77, 0.34);
+  transition: transform 0.45s var(--so-ease), opacity 0.35s ease;
+  opacity: 0;
+}
+.rose-mobile-booking[data-visible="true"] {
+  transform: translate(-50%, 0);
+  opacity: 1;
+}
+.rose-mobile-booking:hover {
+  color: var(--so-paper-warm);
+}
+.rose-mobile-booking span {
+  white-space: nowrap;
+}
+@media (max-width: 760px) {
+  .rose-mobile-booking { display: inline-flex; }
+}
+
+/* --------------------------------------------------------------- video UI */
+
+.rose-video-toggle {
+  position: absolute;
+  right: 14px;
+  bottom: 14px;
+  z-index: 3;
+  border: none;
+  border-radius: 16px;
+  padding: 9px 16px;
+  background: rgba(255, 253, 250, 0.92);
+  color: var(--so-rose);
+  font-family: inherit;
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+.rose-video-toggle:hover {
+  background: var(--so-pink);
+  transform: translateY(-2px);
+}
+
+/* ------------------------------------------------------------- responsive */
+
+@media (max-width: 900px) {
+  .so-price-grid,
+  .so-price-promotions {
+    grid-template-columns: 1fr;
+  }
+  .price-list {
+    grid-template-columns: 1fr;
+  }
+  .price-table-card:first-child,
+  .price-table-card#laser-herren,
+  .price-table-card:nth-child(7) {
+    grid-column: auto;
+  }
+  .so-review-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .so-hero {
+    min-height: 0;
+    --so-hero-gap: 10px;
+    --so-hero-top: 84px;
+  }
+  .so-hero-inner {
+    padding: clamp(118px, 26vw, 148px) 0 clamp(48px, 9vw, 72px);
+  }
+  .so-hero-media img {
+    object-position: 68% 30%;
+  }
+  .so-hero-scrim {
+    background: linear-gradient(90deg, rgba(253, 246, 240, 0.9) 0%, rgba(253, 246, 240, 0.78) 55%, rgba(253, 246, 240, 0.5) 100%);
+  }
+}
+
+/* Phones: the portrait is the whole point of the hero, so the copy comes out
+   from on top of it and the photograph gets its own band above. The band is
+   sized so the 2:1 source is never cropped vertically -- `cover` over the full
+   frame magnified it about 4x and left nothing but an eye and an ear. The
+   horizontal position centres her head in the narrow window. */
+@media (max-width: 640px) {
+  .so-price-card h3 {
+    font-size: 24px;
+    line-height: 1.1;
+  }
+  .so-price-card div:has(> dt),
+  .so-price-promotions div:has(> dt) {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 4px;
+  }
+  .so-price-card dd,
+  .so-price-promotions dd {
+    text-align: left;
+    white-space: normal;
+  }
+  .price-page {
+    padding-top: 88px;
+  }
+  .price-hero h1 {
+    font-size: 46px;
+    line-height: 0.95;
+  }
+  .price-table-head {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .price-table-card div:has(> dt) {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 4px;
+  }
+  .price-table-card dd {
+    text-align: left;
+    white-space: normal;
+  }
+  .so-review-grid {
+    grid-template-columns: 1fr;
+  }
+  .so-hero {
+    --so-hero-band: clamp(360px, 118vw, 520px);
+    min-height: 0;
+  }
+  .so-hero-frame {
+    justify-content: flex-start;
+    background: var(--so-cream);
+  }
+  .so-hero-media,
+  .so-hero-scrim {
+    inset: 0 0 auto;
+    height: var(--so-hero-band);
+  }
+  .so-hero-media img {
+    object-position: 85% 50%;
+  }
+  .so-hero-scrim {
+    background: linear-gradient(
+      180deg,
+      rgba(253, 246, 240, 0) 0%,
+      rgba(253, 246, 240, 0) 58%,
+      rgba(253, 246, 240, 0.55) 80%,
+      rgba(253, 246, 240, 0.92) 92%,
+      var(--so-cream) 100%
+    );
+  }
+  /* The frame still opens from inset to full bleed and the header still takes
+     its background; only the copy is held still, because it sits right under
+     the reader's thumb. Both compensations cancel exactly the padding the hero
+     sheds, and they share its transition so they stay in step frame by frame. */
+  .so-hero-inner {
+    width: calc(100% - 40px - 2 * (10px - var(--so-hero-gap)));
+    padding: calc(var(--so-hero-band) - 26px + 84px - var(--so-hero-top)) 0
+      clamp(26px, 7vw, 42px);
+    transition: padding 0.55s var(--so-ease), width 0.55s var(--so-ease);
+  }
+  .so-hero h1 {
+    max-width: none;
+  }
+  .so-hero-lead {
+    margin-bottom: 24px;
+  }
+}
+
+
+/* Phones: these sections were paying the gutter twice -- 20px of section
+   padding plus the shell's own 20px inset -- which left their cards 40px
+   narrower than they need to be. Drop the shell inset here and let the
+   section padding be the only gutter. */
+@media (max-width: 760px) {
+  .so-treatments > .so-shell,
+  .so-value > .so-shell,
+  .so-tech > .so-shell {
+    width: 100%;
+  }
+}
+
+@media (max-width: 760px) {
+  .so-value-card,
+  .so-step {
+    padding: 26px;
+  }
+  .so-card-invite {
+    padding: 28px;
+  }
+  .so-footer-bottom {
+    justify-content: flex-start;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  [data-rev] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .so-header,
+  .so-mobile-menu,
+  .so-mobile-menu nav > a {
+    animation: none !important;
+  }
+  [data-zoom],
+  [data-lift],
+  [data-arr] {
+    transition: none;
+  }
+}
+
+/* Treatment card media well */
+.so-card-zoom {
+  position: absolute;
+  inset: 0;
+}
+
+/* ------------------------------------------------------------ salon cursor */
+
+.so-cursor {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+:root[data-so-cursor-visible="true"] .so-cursor {
+  opacity: 1;
+}
+
+.so-cursor-drop,
+.so-cursor-halo {
+  position: absolute;
+  top: 0;
+  left: 0;
+  will-change: transform;
+}
+
+/* the droplet itself */
+.so-cursor-drop::after {
+  content: "";
+  display: block;
+  width: 11px;
+  height: 11px;
+  margin: -5.5px 0 0 -5.5px;
+  border-radius: 50% 50% 50% 0;
+  rotate: -45deg;
+  background: var(--so-rose);
+  box-shadow: 0 2px 6px rgba(143, 58, 77, 0.4);
+  transition: width 0.3s var(--so-ease), height 0.3s var(--so-ease),
+    margin 0.3s var(--so-ease), border-radius 0.3s var(--so-ease);
+}
+:root[data-so-cursor-hot="true"] .so-cursor-drop::after {
+  width: 7px;
+  height: 7px;
+  margin: -3.5px 0 0 -3.5px;
+  border-radius: 50%;
+  rotate: 0deg;
+}
+:root[data-so-cursor-down="true"] .so-cursor-drop::after {
+  width: 8px;
+  height: 8px;
+  margin: -4px 0 0 -4px;
+}
+
+/* the halo that eases in behind it */
+.so-cursor-halo::after {
+  content: "";
+  display: block;
+  width: 34px;
+  height: 34px;
+  margin: -17px 0 0 -17px;
+  border-radius: 50%;
+  border: 1px solid rgba(143, 58, 77, 0.34);
+  background: radial-gradient(circle, rgba(244, 191, 196, 0.28) 0%, rgba(244, 191, 196, 0) 70%);
+  transition: width 0.4s var(--so-ease), height 0.4s var(--so-ease),
+    margin 0.4s var(--so-ease), background 0.4s ease, border-color 0.4s ease;
+}
+:root[data-so-cursor-hot="true"] .so-cursor-halo::after {
+  width: 58px;
+  height: 58px;
+  margin: -29px 0 0 -29px;
+  border-color: rgba(143, 58, 77, 0.5);
+  background: radial-gradient(circle, rgba(244, 191, 196, 0.34) 0%, rgba(244, 191, 196, 0) 72%);
+}
+:root[data-so-cursor-down="true"] .so-cursor-halo::after {
+  width: 26px;
+  height: 26px;
+  margin: -13px 0 0 -13px;
+}
+
+/* Hide the platform cursor only while ours is driving. */
+:root[data-so-cursor="on"],
+:root[data-so-cursor="on"] a,
+:root[data-so-cursor="on"] button,
+:root[data-so-cursor="on"] summary,
+:root[data-so-cursor="on"] [role="button"] {
+  cursor: none;
+}
+/* Text entry keeps a real caret. */
+:root[data-so-cursor="on"] :is(input, textarea, select, [contenteditable="true"]) {
+  cursor: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .so-cursor { display: none; }
+}
+
+/* ------------------------------------------------------------ site loader */
+
+@keyframes so-loader-fill {
+  from { height: 0%; }
+  to { height: 100%; }
+}
+@keyframes so-loader-rule {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+@keyframes so-loader-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: none; }
+}
+
+.so-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--so-cream);
+  transition: opacity 0.6s var(--so-ease), visibility 0.6s;
+}
+.so-loader[data-state="leaving"] {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.so-loader-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+}
+
+/* The mark is the mask; the gradient rises inside it. */
+.so-loader-mark {
+  position: relative;
+  display: block;
+  width: 108px;
+  height: 88px;
+  background: rgba(143, 58, 77, 0.14);
+  -webkit-mask: url("/brand/so-mark-glyph.png") center / contain no-repeat;
+  mask: url("/brand/so-mark-glyph.png") center / contain no-repeat;
+}
+.so-loader-fill {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 0;
+  background: var(--so-rose);
+  animation: so-loader-fill 1.3s var(--so-ease) forwards;
+}
+
+.so-loader-word {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--so-soft);
+  animation: so-loader-in 0.7s 0.25s var(--so-ease) both;
+}
+
+.so-loader-rule {
+  display: block;
+  width: 132px;
+  height: 2px;
+  border-radius: 2px;
+  background: rgba(143, 58, 77, 0.14);
+  overflow: hidden;
+}
+.so-loader-rule i {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 2px;
+  background: var(--so-pink);
+  transform-origin: left;
+  animation: so-loader-rule 1.35s var(--so-ease) forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .so-loader { display: none; }
+}
+
+/* Name plate over the map, so the salon reads correctly at the pin. */
+.so-map-place {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 10px 16px;
+  border-radius: 14px;
+  background: var(--so-paper-warm);
+  box-shadow: var(--so-shadow-sm);
+}
+.so-map-place strong {
+  font-family: var(--font-so-heading);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--so-ink-deep);
+}
+.so-map-place small {
+  font-size: 11.5px;
+  color: var(--so-soft);
+}
+
+/* ------------------------------------------- mobile tap targets (>= 44px) */
+
+@media (max-width: 760px) {
+  .so-header-logo,
+  .so-footer-col a,
+  .so-footer-col address a,
+  .so-contact-map a,
+  .so-contact-facts a,
+  .so-footer-credit,
+  .language-toggle {
+    min-height: 44px;
+  }
+  .so-header-logo,
+  .so-footer-col a,
+  .so-footer-col address a,
+  .so-contact-facts a,
+  .so-footer-credit {
+    display: inline-flex;
+    align-items: center;
+    min-width: 44px;
+  }
+  .so-footer-col nav,
+  .so-footer-col > div {
+    gap: 2px;
+  }
+  .so-footer-col address {
+    display: flex;
+    flex-direction: column;
+  }
+  .so-contact-map a {
+    padding-block: 13px;
+  }
+  .so-form-grid {
+    grid-template-columns: 1fr;
+  }
+  .so-form-submit {
+    width: 100%;
+  }
+}
+
+/* NiSV qualification note in the technology section */
+.so-proof {
+  display: flex;
+  align-items: flex-start;
+  gap: 18px;
+  margin: 0 0 30px;
+  padding: 20px 22px;
+  border-radius: var(--so-radius);
+  /* White card on the cream section ground; the hairline keeps its edge
+     readable now that the pink no longer defines the shape. */
+  background: var(--so-paper-warm);
+  box-shadow: inset 0 0 0 1px var(--so-line-soft), var(--so-shadow-sm);
+}
+.so-proof strong {
+  flex-shrink: 0;
+  font-family: var(--font-so-heading);
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--so-rose);
+}
+.so-proof span {
+  font-size: 14.5px;
+  line-height: 1.55;
+  color: var(--so-muted);
+}
+
+/* Below ~390px the two blocks no longer fit side by side. They wrapped while
+   keeping the divider rule and left padding, which left the second block
+   indented under a stray vertical line, so stack them cleanly instead. */
+/* Hero CTAs go full width once they stack. */
+@media (max-width: 640px) {
+  .so-hero-actions {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+  .so-hero-actions .so-btn {
+    width: 100%;
+  }
+}
+
+
+@media (max-width: 860px) {
+  .so-steps-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .so-step + .so-step {
+    border-left: 0;
+    border-top: 1px solid rgba(143, 58, 77, 0.18);
+  }
+}
+
+
+.so-value-card[data-align="top"] h3 {
+  color: var(--so-ink-deep);
+}
+.so-value-card[data-align="top"] p {
+  color: var(--so-muted);
+}
+
+@media (max-width: 760px) {
+  /* stacked: fade downward instead of sideways */
+  .so-card,
+  .so-card:nth-child(even) {
+    background: linear-gradient(
+      180deg,
+      var(--so-card-tint, transparent) 0%,
+      var(--so-card-tint, transparent) 52%,
+      transparent 92%
+    );
+  }
+}

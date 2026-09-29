@@ -1,0 +1,1219 @@
+.offer-page {
+  min-height: 100svh;
+  overflow-x: clip;
+  padding: 14px 14px 104px;
+  background:
+    linear-gradient(180deg, rgba(254, 175, 201, 0.5), rgba(253, 246, 240, 0) 340px),
+    var(--so-cream);
+  color: var(--so-ink);
+}
+
+[data-offer-page="laser"].offer-page {
+  padding: 0 0 104px;
+  background: var(--so-paper);
+}
+
+[data-offer-page="laser"] .offer-section {
+  width: min(calc(100% - 28px), 1040px);
+}
+
+body:has(.offer-page) .so-loader {
+  display: none !important;
+}
+
+body:has(.offer-page) {
+  overflow: auto !important;
+}
+
+.offer-page :is(h1, h2, h3, p, dl, dd, figure) { margin: 0; }
+
+.offer-top {
+  position: absolute;
+  inset: 22px 22px auto;
+  z-index: 4;
+}
+
+.offer-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  border: 1px solid rgba(255, 253, 250, 0.55);
+  border-radius: 999px;
+  padding: 8px 12px 8px 9px;
+  background: rgba(255, 253, 250, 0.7);
+  color: var(--so-ink-deep);
+  text-decoration: none;
+  box-shadow: 0 12px 34px rgba(143, 58, 77, 0.12);
+  backdrop-filter: blur(16px);
+}
+
+.offer-logo .so-mark {
+  height: 34px;
+  width: 34px;
+}
+
+.offer-logo small {
+  font-family: var(--font-so-heading);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.offer-home-hero .so-hero-frame {
+  background: #f3a8bb;
+}
+
+.offer-home-hero .so-hero-media img {
+  object-position: 50% 50%;
+}
+
+.offer-home-hero .so-hero-scrim {
+  display: none;
+}
+
+.offer-home-hero .so-hero-copy {
+  text-shadow: 0 2px 18px rgba(255, 253, 250, 0.72);
+}
+
+.offer-home-hero .so-hero-tagline {
+  max-width: 14ch;
+}
+
+.offer-home-call {
+  gap: 8px;
+}
+
+.offer-home-call svg {
+  height: 17px;
+  width: 17px;
+}
+
+.offer-home-facts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 168px));
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.offer-home-facts div {
+  border: 1px solid rgba(143, 58, 77, 0.12);
+  border-radius: 18px;
+  padding: 12px 14px;
+  background: rgba(255, 253, 250, 0.62);
+}
+
+.offer-home-facts dt {
+  color: var(--so-rose);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.offer-home-facts dd {
+  margin-top: 4px;
+  color: var(--so-ink-deep);
+  font-size: 13px;
+  font-weight: 650;
+}
+
+.offer-hero {
+  position: relative;
+  display: grid;
+  min-height: min(760px, calc(100svh - 28px));
+  overflow: hidden;
+  border-radius: 30px;
+  background: var(--so-pink);
+  box-shadow: var(--so-shadow);
+  isolation: isolate;
+}
+
+.offer-hero-media {
+  position: absolute;
+  inset: 0;
+}
+
+.offer-hero-media img {
+  object-fit: cover;
+  object-position: 50% 42%;
+}
+
+[data-offer-page="beauty"] .offer-hero-media img {
+  object-position: 52% 40%;
+}
+
+.offer-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    linear-gradient(180deg, rgba(45, 26, 32, 0.06), rgba(45, 26, 32, 0.08) 35%, rgba(253, 246, 240, 0.92) 76%, var(--so-cream)),
+    linear-gradient(90deg, rgba(253, 246, 240, 0.9), rgba(253, 246, 240, 0.28) 56%, rgba(253, 246, 240, 0));
+}
+
+[data-offer-page="beauty"] .offer-hero::after {
+  display: none;
+}
+
+.offer-hero-copy {
+  position: relative;
+  z-index: 2;
+  align-self: end;
+  width: min(100%, 650px);
+  padding: 150px 18px 26px;
+}
+
+[data-offer-page="beauty"] .offer-hero-copy {
+  text-shadow: 0 2px 18px rgba(255, 253, 250, 0.72);
+}
+
+.offer-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 13px;
+  color: var(--so-rose);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.offer-hero h1,
+.offer-section h2,
+.offer-final h2 {
+  font-family: var(--font-so-display);
+  color: var(--so-ink-deep);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  text-wrap: pretty;
+}
+
+.offer-hero h1 {
+  max-width: 100%;
+  font-size: clamp(40px, 13.4vw, 76px);
+  line-height: 0.98;
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+
+[data-offer-page="beauty"] .offer-hero h1 {
+  max-width: 100%;
+  font-size: clamp(37px, 10.8vw, 70px);
+  overflow-wrap: normal;
+  hyphens: none;
+}
+
+.offer-hero-copy > p:not(.offer-kicker) {
+  margin-top: 18px;
+  max-width: 35rem;
+  color: var(--so-muted);
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.offer-actions {
+  display: grid;
+  gap: 10px;
+  margin-top: 22px;
+}
+
+.offer-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  min-height: 52px;
+  border-radius: 999px;
+  padding: 15px 20px;
+  box-sizing: border-box;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1;
+  text-decoration: none;
+}
+
+.offer-button svg {
+  height: 18px;
+  width: 18px;
+  flex: 0 0 auto;
+}
+
+.offer-button-primary {
+  background: var(--so-rose);
+  color: var(--so-paper-warm);
+  box-shadow: 0 15px 35px rgba(143, 58, 77, 0.22);
+}
+
+.offer-button-secondary {
+  border: 1px solid var(--so-line);
+  background: rgba(255, 253, 250, 0.76);
+  color: var(--so-rose);
+}
+
+.offer-hero-facts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 9px;
+  margin-top: 20px;
+}
+
+.offer-hero-facts div {
+  border-radius: 18px;
+  padding: 14px;
+  background: rgba(255, 253, 250, 0.62);
+}
+
+.offer-hero-facts dt {
+  color: var(--so-rose);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.offer-hero-facts dd {
+  margin-top: 4px;
+  color: var(--so-ink-deep);
+  font-size: 13px;
+  font-weight: 650;
+}
+
+.offer-section {
+  width: min(100%, 1040px);
+  margin: 0 auto;
+  padding: 70px 0 0;
+}
+
+.offer-section-head {
+  display: grid;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.offer-section h2,
+.offer-final h2 {
+  font-size: clamp(34px, 11vw, 58px);
+  line-height: 1.04;
+}
+
+.offer-section-head > p:not(.offer-kicker),
+.offer-before-after p,
+.offer-comfort p,
+.offer-final > p {
+  color: var(--so-soft);
+  font-size: 15.5px;
+  line-height: 1.65;
+}
+
+.offer-price-stack,
+.offer-review-stack {
+  display: grid;
+  gap: 14px;
+}
+
+.offer-price-card,
+.offer-mini-price,
+.offer-review-card,
+.offer-service-card {
+  border: 1px solid var(--so-line-soft);
+  border-radius: 22px;
+  background: var(--so-paper-warm);
+  box-shadow: var(--so-shadow-sm);
+}
+
+.offer-price-card {
+  overflow: hidden;
+}
+
+.offer-price-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  min-height: 58px;
+  padding: 0 16px;
+  background: var(--so-rose);
+  color: var(--so-paper-warm);
+}
+
+.offer-price-head h3 {
+  font-size: 17px;
+  line-height: 1.2;
+}
+
+.offer-price-head span {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.offer-price-card dl div {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 16px;
+  padding: 15px 16px;
+}
+
+.offer-price-card dl div + div {
+  border-top: 1px solid var(--so-line-soft);
+}
+
+.offer-price-card dt {
+  color: var(--so-muted);
+  font-size: 14.5px;
+  line-height: 1.35;
+}
+
+.offer-price-card dd {
+  color: var(--so-ink-deep);
+  font-size: 15px;
+  font-weight: 750;
+  white-space: nowrap;
+}
+
+.offer-price-card > p {
+  border-top: 1px solid var(--so-line-soft);
+  padding: 14px 16px 16px;
+  color: var(--so-soft);
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.offer-before-after,
+.offer-comfort {
+  display: grid;
+  gap: 20px;
+}
+
+.offer-before-after img {
+  width: 100%;
+  height: auto;
+  max-height: 520px;
+  border-radius: 24px;
+  object-fit: cover;
+  box-shadow: var(--so-shadow-sm);
+}
+
+.offer-services {
+  width: min(100%, 1140px);
+}
+
+.offer-service-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.offer-service-card {
+  overflow: hidden;
+  padding-bottom: 15px;
+}
+
+.offer-service-card > div {
+  position: relative;
+  aspect-ratio: 1 / 1.16;
+  overflow: hidden;
+  background: var(--so-pink);
+}
+
+.offer-service-card img {
+  object-fit: cover;
+}
+
+.offer-service-card h3 {
+  padding: 14px 13px 0;
+  color: var(--so-ink-deep);
+  font-size: 16px;
+  line-height: 1.2;
+}
+
+.offer-service-card p {
+  padding: 8px 13px 0;
+  color: var(--so-soft);
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.offer-service-card span,
+.offer-mini-price strong {
+  display: inline-flex;
+  width: fit-content;
+  margin: 12px 13px 0;
+  border-radius: 999px;
+  padding: 8px 11px;
+  background: var(--so-pink);
+  color: var(--so-ink-deep);
+  font-size: 12px;
+  font-weight: 750;
+}
+
+.offer-mini-price {
+  padding: 18px;
+}
+
+.offer-mini-price h3 {
+  color: var(--so-ink-deep);
+  font-size: 19px;
+}
+
+.offer-mini-price p {
+  margin-top: 8px;
+  color: var(--so-soft);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.offer-review-card {
+  padding: 18px;
+}
+
+.offer-review-card > div:first-child {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+}
+
+.offer-review-card > div:first-child > span {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: var(--so-pink);
+  color: var(--so-rose);
+  font-weight: 800;
+}
+
+.offer-review-card h3 {
+  color: var(--so-ink-deep);
+  font-size: 15px;
+}
+
+.offer-review-card div p {
+  color: var(--so-soft);
+  font-size: 12px;
+}
+
+.offer-stars {
+  margin-top: 13px;
+  color: var(--so-rose);
+  font-size: 14px;
+  letter-spacing: 0.08em;
+}
+
+.offer-review-card > p {
+  margin-top: 9px;
+  color: var(--so-muted);
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.offer-comfort {
+  align-items: center;
+  border-radius: 28px;
+  padding: 26px 18px;
+  background: var(--so-pink);
+}
+
+.offer-comfort ul {
+  display: grid;
+  gap: 9px;
+  margin: 18px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.offer-comfort li {
+  border-radius: 999px;
+  padding: 11px 13px;
+  background: rgba(255, 253, 250, 0.72);
+  color: var(--so-ink-deep);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.offer-comfort figure {
+  display: grid;
+  place-items: center;
+}
+
+.offer-comfort img {
+  width: min(78vw, 320px);
+  height: auto;
+  filter: drop-shadow(0 24px 32px rgba(143, 58, 77, 0.22));
+}
+
+.offer-final {
+  width: min(100%, 920px);
+  margin: 70px auto 0;
+  border-radius: 30px;
+  padding: 34px 20px;
+  background: var(--so-rose);
+  color: var(--so-paper-warm);
+  text-align: center;
+}
+
+.offer-final .offer-kicker,
+.offer-final h2 {
+  color: var(--so-paper-warm);
+}
+
+.offer-final > p {
+  margin: 14px auto 0;
+  max-width: 36rem;
+  color: rgba(255, 253, 250, 0.78);
+}
+
+.offer-final .offer-button-primary {
+  background: var(--so-paper-warm);
+  color: var(--so-rose);
+}
+
+.offer-final .offer-button-secondary {
+  border-color: rgba(255, 253, 250, 0.28);
+  background: rgba(255, 253, 250, 0.13);
+  color: var(--so-paper-warm);
+}
+
+.offer-map-link,
+.offer-final nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.offer-map-link,
+.offer-final nav a {
+  color: rgba(255, 253, 250, 0.82);
+  font-size: 13px;
+  text-decoration: none;
+}
+
+.offer-final nav {
+  gap: 18px;
+  margin-top: 24px;
+}
+
+.offer-sticky-cta {
+  position: fixed;
+  inset: auto 12px max(12px, env(safe-area-inset-bottom));
+  z-index: 30;
+  display: grid;
+  grid-template-columns: 1.35fr 1fr;
+  gap: 8px;
+  border: 1px solid rgba(255, 253, 250, 0.55);
+  border-radius: 999px;
+  padding: 7px;
+  background: rgba(255, 253, 250, 0.83);
+  box-shadow: 0 18px 44px rgba(143, 58, 77, 0.24);
+  backdrop-filter: blur(18px);
+}
+
+.offer-sticky-cta a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 48px;
+  border-radius: 999px;
+  color: var(--so-rose);
+  font-size: 14px;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.offer-sticky-cta a:first-child {
+  background: var(--so-rose);
+  color: var(--so-paper-warm);
+}
+
+.offer-sticky-cta svg {
+  height: 18px;
+  width: 18px;
+}
+
+@media (min-width: 700px) {
+  .offer-page {
+    padding: 22px 22px 116px;
+  }
+
+  [data-offer-page="laser"].offer-page {
+    padding: 0 0 116px;
+  }
+
+  .offer-top {
+    inset: 34px 34px auto;
+  }
+
+  .offer-hero-copy {
+    padding: 170px 48px 54px;
+  }
+
+  .offer-actions {
+    grid-template-columns: max-content max-content;
+  }
+
+  .offer-price-stack {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .offer-price-card-wide {
+    grid-column: 1 / -1;
+  }
+
+  .offer-before-after,
+  .offer-comfort {
+    grid-template-columns: 1fr 0.72fr;
+  }
+
+  .offer-service-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .offer-review-stack {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .offer-sticky-cta {
+    left: 50%;
+    right: auto;
+    width: min(520px, calc(100% - 24px));
+    transform: translateX(-50%);
+  }
+}
+
+@media (max-width: 380px) {
+  .offer-hero-copy {
+    padding-inline: 14px;
+  }
+
+  .offer-hero h1 {
+    font-size: 42px;
+  }
+
+  .offer-service-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .offer-hero-facts {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .offer-home-hero {
+    min-height: 100svh;
+  }
+
+  .offer-home-hero .so-hero-frame {
+    justify-content: flex-end;
+    min-height: calc(100svh - var(--so-hero-top) - var(--so-hero-gap));
+  }
+
+  .offer-home-hero .so-hero-media,
+  .offer-home-hero .so-hero-scrim {
+    inset: 0;
+    height: 100%;
+  }
+
+  .offer-home-hero .so-hero-media img {
+    object-position: 50% 54%;
+  }
+
+  .offer-home-hero .so-hero-scrim {
+    display: none;
+  }
+
+  .offer-home-hero .so-hero-inner {
+    width: calc(100% - 34px - 2 * (10px - var(--so-hero-gap)));
+    padding: 0 0 clamp(106px, 26vw, 132px);
+  }
+
+  .offer-home-hero .so-h1 {
+    font-size: clamp(48px, 16vw, 68px);
+    line-height: 0.9;
+  }
+
+  .offer-home-hero .so-hero-tagline {
+    margin-top: 8px;
+    max-width: 16ch;
+  }
+
+  .offer-home-hero .so-hero-lead {
+    display: none;
+  }
+
+  .offer-home-hero .so-hero-actions {
+    margin-top: 18px;
+  }
+
+  .offer-home-hero .so-hero-actions .so-btn {
+    min-height: 50px;
+    padding-inline: 18px;
+  }
+
+  .offer-home-facts {
+    display: none;
+  }
+
+  .offer-comfort {
+    padding: 24px 14px 22px;
+  }
+
+  .offer-comfort ul {
+    gap: 8px;
+    margin-top: 16px;
+  }
+
+  .offer-comfort li {
+    display: flex;
+    align-items: center;
+    min-height: 42px;
+    border-radius: 14px;
+    padding: 9px 11px;
+    font-size: 12px;
+    line-height: 1.25;
+    overflow-wrap: anywhere;
+  }
+
+  .offer-comfort li::before {
+    content: "";
+    flex: 0 0 auto;
+    width: 7px;
+    height: 7px;
+    margin-right: 9px;
+    border-radius: 999px;
+    background: var(--so-rose);
+  }
+}
+
+/* ==========================================================================
+   Laser offer page — the 180 € Aktion, the free test, the short price list
+   ========================================================================== */
+
+.offer-price-line {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 14px;
+}
+.offer-price-line strong {
+  font-size: clamp(2.1rem, 5vw, 2.8rem);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--so-rose);
+}
+.offer-price-line s {
+  color: var(--so-soft);
+  font-size: 1.15rem;
+  text-decoration-thickness: 1.5px;
+}
+.offer-price-line span {
+  color: var(--so-muted);
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.so-hero-copy .offer-hero-claim {
+  margin-top: 10px;
+  font-size: clamp(1.05rem, 2.4vw, 1.3rem);
+  font-weight: 700;
+  color: var(--so-ink);
+  line-height: 1.3;
+}
+
+/* --- the three steps --- */
+.offer-step-list {
+  list-style: none;
+  margin: 26px 0 26px;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 16px;
+}
+.offer-step-list li {
+  background: var(--so-paper-warm);
+  border: 1px solid rgba(33, 25, 28, 0.08);
+  border-radius: 20px;
+  padding: 22px 22px 24px;
+}
+.offer-step-list li > span {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  background: var(--so-rose);
+  color: var(--so-paper-warm);
+  font-size: 15px;
+  font-weight: 700;
+}
+.offer-step-list h3 {
+  margin-top: 14px;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+.offer-step-list p {
+  margin-top: 7px;
+  color: var(--so-soft);
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+/* --- what the package contains --- */
+.offer-package-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(260px, 0.75fr);
+  gap: 24px;
+  align-items: center;
+  margin-top: 26px;
+  padding: 28px;
+  background: var(--so-paper-warm);
+  border: 1px solid rgba(143, 58, 77, 0.18);
+  border-radius: 24px;
+}
+.offer-package-card > ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 10px 18px;
+}
+.offer-package-card > ul li {
+  position: relative;
+  padding-left: 22px;
+  font-size: 15.5px;
+  line-height: 1.5;
+}
+.offer-package-card > ul li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--so-rose);
+}
+.offer-package-price {
+  display: grid;
+  gap: 10px;
+  justify-items: start;
+  padding-left: 24px;
+  border-left: 1px solid rgba(33, 25, 28, 0.1);
+}
+.offer-package-price > p:not(.offer-price-line) {
+  color: var(--so-soft);
+  font-size: 14px;
+}
+.offer-package-price .offer-button {
+  width: 100%;
+}
+
+/* --- short price list --- */
+.offer-price-note {
+  margin-top: 18px;
+  color: var(--so-soft);
+  font-size: 15px;
+  line-height: 1.6;
+}
+.offer-price-note a {
+  color: var(--so-rose);
+  font-weight: 600;
+}
+
+.offer-footnote {
+  width: min(calc(100% - 28px), 1040px);
+  margin: 24px auto 120px;
+  color: var(--so-soft);
+  font-size: 12.5px;
+  line-height: 1.55;
+}
+
+.offer-final-facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 32px;
+  margin-top: 22px;
+}
+.offer-final-facts dt {
+  color: rgba(255, 253, 250, 0.7);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.offer-final-facts dd {
+  margin: 4px 0 0;
+  color: var(--so-paper-warm);
+  font-size: 15px;
+  font-weight: 600;
+}
+
+@media (max-width: 860px) {
+  .offer-package-card {
+    grid-template-columns: 1fr;
+    padding: 22px;
+  }
+  .offer-package-price {
+    padding-left: 0;
+    padding-top: 20px;
+    border-left: 0;
+    border-top: 1px solid rgba(33, 25, 28, 0.1);
+    justify-items: stretch;
+  }
+  .offer-footnote {
+    margin-bottom: 140px;
+  }
+}
+
+/* --- Laser hero: centred, with air between the offer, the promise and the buttons.
+   Scoped to the laser page so /angebote/beauty keeps its editorial left-aligned hero. */
+[data-offer-page="laser"] .so-hero-copy {
+  display: grid;
+  justify-items: center;
+  text-align: center;
+  max-width: 36rem;
+  margin: 0 auto;
+}
+[data-offer-page="laser"] .so-hero-copy .offer-kicker {
+  margin-bottom: 18px;
+}
+[data-offer-page="laser"] .so-hero-copy .so-h1 {
+  max-width: 18ch;
+  margin: 0 auto;
+}
+[data-offer-page="laser"] .so-hero-copy .offer-price-line {
+  justify-content: center;
+  margin-top: 22px;
+}
+[data-offer-page="laser"] .so-hero-copy .offer-hero-claim {
+  margin-top: 16px;
+  max-width: 26ch;
+}
+[data-offer-page="laser"] .so-hero-copy .so-hero-lead {
+  margin: 18px auto 0;
+  max-width: 40ch;
+}
+[data-offer-page="laser"] .so-hero-actions {
+  justify-content: center;
+  width: 100%;
+  margin-top: 28px;
+}
+[data-offer-page="laser"] .offer-home-facts {
+  justify-content: center;
+  margin: 26px auto 0;
+}
+
+/* --- Final call to action: the address block was sitting on top of the buttons. */
+[data-offer-page="laser"] .offer-final {
+  padding: 44px 24px 40px;
+}
+[data-offer-page="laser"] .offer-final > p {
+  margin: 0 auto;
+  max-width: 44ch;
+}
+[data-offer-page="laser"] .offer-final .offer-actions {
+  justify-content: center;
+  margin-top: 30px;
+}
+[data-offer-page="laser"] .offer-final-facts {
+  justify-content: center;
+  gap: 18px 44px;
+  margin-top: 34px;
+  padding-top: 26px;
+  border-top: 1px solid rgba(255, 253, 250, 0.22);
+}
+[data-offer-page="laser"] .offer-final .offer-map-link {
+  margin-top: 26px;
+}
+[data-offer-page="laser"] .offer-final nav {
+  margin-top: 22px;
+}
+
+@media (max-width: 640px) {
+  /* The offer, the promise and both buttons all have to fit the first screen,
+     so the hero sits centred in the frame rather than pinned to its foot. */
+  [data-offer-page="laser"].offer-page .so-hero-frame {
+    justify-content: center;
+  }
+  [data-offer-page="laser"] .offer-home-hero .so-hero-inner {
+    padding: 24px 0 clamp(96px, 24vw, 120px);
+  }
+  [data-offer-page="laser"] .offer-home-hero .so-h1 {
+    font-size: clamp(40px, 12.5vw, 56px);
+    line-height: 0.95;
+  }
+  [data-offer-page="laser"] .so-hero-copy .offer-price-line {
+    margin-top: 18px;
+    gap: 8px 12px;
+  }
+  [data-offer-page="laser"] .so-hero-copy .offer-hero-claim {
+    font-size: 1.05rem;
+    max-width: 24ch;
+  }
+  [data-offer-page="laser"] .so-hero-actions {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+    margin-top: 24px;
+  }
+  [data-offer-page="laser"] .so-hero-actions .so-btn {
+    width: 100%;
+    justify-content: center;
+  }
+  [data-offer-page="laser"] .offer-final .offer-actions {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  [data-offer-page="laser"] .offer-final .offer-button {
+    width: 100%;
+  }
+  [data-offer-page="laser"] .offer-final-facts {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+  [data-offer-page="laser"] .offer-final-facts div {
+    width: 100%;
+  }
+}
+
+@media (min-width: 641px) {
+  /* Desktop: the whole offer — price, promise and both buttons — has to land
+     inside the first screen, so the hero block is tightened. */
+  [data-offer-page="laser"] .offer-home-hero .so-hero-inner {
+    padding: clamp(72px, 8vw, 104px) 0 clamp(36px, 4vw, 60px);
+  }
+  [data-offer-page="laser"] .offer-home-hero .so-h1 {
+    font-size: clamp(2.9rem, 4.3vw, 4.2rem);
+    line-height: 1;
+    max-width: 20ch;
+  }
+  [data-offer-page="laser"] .so-hero-copy .offer-price-line {
+    margin-top: 18px;
+  }
+  [data-offer-page="laser"] .so-hero-copy .offer-hero-claim {
+    margin-top: 12px;
+  }
+  [data-offer-page="laser"] .so-hero-copy .so-hero-lead {
+    margin-top: 14px;
+  }
+  [data-offer-page="laser"] .so-hero-actions {
+    margin-top: 22px;
+  }
+  [data-offer-page="laser"] .offer-home-facts {
+    grid-template-columns: repeat(3, minmax(0, 156px));
+    margin-top: 20px;
+  }
+}
+
+/* Step cards carry a photo, so the copy under them can stay short. */
+.offer-step-media {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  margin: -22px -22px 16px;
+  border-radius: 20px 20px 0 0;
+  overflow: hidden;
+  background: var(--so-blush, #e3c4c0);
+}
+.offer-step-media img {
+  object-fit: cover;
+}
+.offer-step-list li > .offer-step-media > span {
+  position: absolute;
+  left: 14px;
+  bottom: 14px;
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  background: var(--so-rose);
+  color: var(--so-paper-warm);
+  font-size: 15px;
+  font-weight: 700;
+  box-shadow: 0 6px 18px rgba(33, 25, 28, 0.25);
+}
+.offer-step-list li {
+  overflow: hidden;
+}
+.offer-step-list h3 {
+  margin-top: 0;
+}
+
+@media (max-width: 640px) {
+  .offer-step-media {
+    aspect-ratio: 16 / 9;
+  }
+}
+
+/* Laser device block: three facts, centred, image under them on a phone. */
+.offer-device {
+  text-align: center;
+  justify-items: center;
+}
+.offer-device h2 {
+  max-width: 16ch;
+  margin-inline: auto;
+}
+.offer-device > div > p:not(.offer-kicker) {
+  margin-inline: auto;
+  max-width: 34ch;
+}
+.offer-device ul {
+  justify-items: center;
+  margin-inline: auto;
+  max-width: 34rem;
+}
+.offer-device li {
+  width: 100%;
+  text-align: center;
+}
+.offer-device .offer-kicker {
+  justify-content: center;
+}
+
+@media (min-width: 821px) {
+  .offer-device {
+    grid-template-columns: minmax(0, 1fr) minmax(220px, 0.62fr);
+    text-align: left;
+    justify-items: stretch;
+  }
+  .offer-device h2,
+  .offer-device > div > p:not(.offer-kicker),
+  .offer-device ul {
+    margin-inline: 0;
+  }
+  .offer-device li {
+    text-align: left;
+  }
+  .offer-device .offer-kicker {
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 640px) {
+  .offer-device li {
+    justify-content: center;
+    font-size: 12.5px;
+  }
+  .offer-device figure img {
+    width: min(62vw, 240px);
+    height: auto;
+  }
+}
+
+/* The pink device block overrides .offer-section's top padding with its own,
+   which left the steps CTA sitting on its edge. Space it off instead. */
+.offer-device {
+  margin-top: clamp(34px, 7vw, 58px);
+}
